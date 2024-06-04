@@ -1,13 +1,11 @@
 import AddToCartIcon from "../../assets/icons/add_cart.svg"
-import {useState} from "react"
+import {useState,useEffect} from "react"
 const ListItem = ({data})=>{
     const [message,steMessage] = useState("Not added to the cart yet");
-    const handleclick = () => {
-        steMessage("Added to the cart!");
-        console.log("Clicked")
-    } 
     const [counter, setCounter] = useState(0)
-
+    const [isAddToCart,setAddToCart] = useState(true);
+    
+    
     const increaseCounterByOne = () => {
         // Add increasing logic
         setCounter(counter + 1);
@@ -20,7 +18,20 @@ const ListItem = ({data})=>{
         }
         setCounter(counter - 1);
     }
-
+    useEffect(() => {
+        if(counter <= 0) {
+            setAddToCart(true);
+        }else{
+            if(isAddToCart == true)
+              setAddToCart(false);
+        }
+    }, [counter,isAddToCart])
+    const handleclick = () => {
+        steMessage("Added to the cart!");
+        setAddToCart(false);
+        console.log("Clicked");
+        increaseCounterByOne();
+    } 
     return (
         <div className={"item-card"}>
             <img className={"img-fluid"} src={`../../../assets/${data.thumbnail}`} alt="some title" />
@@ -36,15 +47,14 @@ const ListItem = ({data})=>{
                 </div>
             </div>
             <small className={"cart-message"}>{message}</small>
-            {/* <button className={"cart-add"} onClick={handleclick} >
+           {isAddToCart == true? <button className={"cart-add"} onClick={handleclick} >
                 <span>Add to Card</span>
                 <img src={AddToCartIcon} alt="add to cart"/>
-            </button> */}
-             <div className={"cart-addon"}>
+            </button> : <div className={"cart-addon"}>
                 <button onClick={descreaseCounterByOne}><span>-</span></button>
                 <span className={"counter"}>{counter}</span>
                 <button onClick={increaseCounterByOne}><span>+</span></button>
-            </div>
+            </div>} 
         </div>
     )
 }
