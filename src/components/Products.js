@@ -1,5 +1,5 @@
 import ListItem from "./ListItem/ListItem";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {Form} from './Form'
 export const Products = () =>{
     // const [title, setTitle] = useState("")
@@ -41,7 +41,12 @@ export const Products = () =>{
         discountedPrice: 340,
         thumbnail: "placeholder.png"
     });
-
+useEffect(()=>{
+  const result =  fetch(`http://localhost:8000/api/v1/get-products-data`);
+  result.then(response => response.json())
+  .then(data => console.log(data))
+  .catch(err => console.error(err));
+},[])
     // const handleTitle = (event) => {
     //     // console.log(event)
     //     // console.log(event.target.value)
