@@ -7,34 +7,35 @@ export const Products = () =>{
     // const [price, setPrice] = useState(0)
     // const [discountedPrice, setDiscountedPrice] = useState(0)
     // const [thumbnail, setThumbnail] = useState("")
- const [items,setItems] = useState([{
-    id: 0,
-    title: "Title of this Item 1",
-    price: 450,
-    discountedPrice: 340,
-    thumbnail: "placeholder.png"
-},
-{
-    id: 1,
-    title: "Title of this Item 2",
-    price: 550,
-    discountedPrice: 440,
-    thumbnail: "placeholder.png"
-},
-{
-    id: 2,
-    title: "Title of this Item 3",
-    price: 650,
-    discountedPrice: 540,
-    thumbnail: "placeholder.png"
-},
-{
-    id: 3,
-    title: "Title of this Item 4",
-    price: 750,
-    discountedPrice: 540,
-    thumbnail: "placeholder.png"
-}]);
+    // {
+    //     id: 0,
+    //     title: "Title of this Item 1",
+    //     price: 450,
+    //     discountedPrice: 340,
+    //     thumbnail: "placeholder.png"
+    // },
+    // {
+    //     id: 1,
+    //     title: "Title of this Item 2",
+    //     price: 550,
+    //     discountedPrice: 440,
+    //     thumbnail: "placeholder.png"
+    // },
+    // {
+    //     id: 2,
+    //     title: "Title of this Item 3",
+    //     price: 650,
+    //     discountedPrice: 540,
+    //     thumbnail: "placeholder.png"
+    // },
+    // {
+    //     id: 3,
+    //     title: "Title of this Item 4",
+    //     price: 750,
+    //     discountedPrice: 540,
+    //     thumbnail: "placeholder.png"
+    // }
+ const [items,setItems] = useState([]);
     const [item, setItem] = useState({
         id: 0,
         title: "Title of this Item 1",
@@ -53,6 +54,14 @@ useEffect(()=>{
 async function fatchProductData(){
     const result = await axios.get(`http://localhost:8000/api/v1/get-products-data`); 
      console.log("result=>",result);
+     const data = result.data.data;
+     const transFormedData = data.map((item,index)=>{
+        return {
+            ...item,
+            id: index
+        }
+     });
+     setItems(transFormedData);
 }
     // const handleTitle = (event) => {
     //     // console.log(event)
