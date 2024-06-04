@@ -6,3 +6,18 @@ exports.getProductData = async (req, res, next) => {
       data:data.items,
     });
   };
+
+  exports.updateProductData = async (req,res,next) =>{
+    const { id } = req.params;
+    const result = data.items.map((item,index) =>{
+          if(id == index){
+            item.title = req.body.title
+          }
+          return item;
+    });
+    res.status(200).json({
+      success: true,
+      data:result,
+    });
+     
+  }

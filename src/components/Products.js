@@ -52,6 +52,7 @@ useEffect(()=>{
 },[])
 
 async function fatchProductData(){
+    try{
     const result = await axios.get(`http://localhost:8000/api/v1/get-products-data`); 
      console.log("result=>",result);
      const data = result.data.data;
@@ -62,6 +63,27 @@ async function fatchProductData(){
         }
      });
      setItems(transFormedData);
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+const updateItemTitle = async (itemId) => {
+    console.log(`Item with Id:${itemId}`);
+    try{
+        let title = `Update Title #Item-${itemId}`
+      const result =  await axios.put(`http://localhost:8000/api/v1/update-products-data/${itemId}`, {
+            title: title
+        })
+        console.log("result=>",result);
+        let data = [...items]
+        let index = data.findIndex(e => e.id === itemId)
+        data[index]['title'] = title
+        setItems(data)
+
+    }catch(err){
+        console.log(err);
+    }
 }
     // const handleTitle = (event) => {
     //     // console.log(event)
@@ -120,7 +142,7 @@ const handleInput = event =>{
     <div className={"product-list--wrapper"}>
       {
       items.map((item,index) => {
-        return <ListItem data={item} key={item.id}/>
+        return <ListItem data={item} key={item.id} updateItemTitle={updateItemTitle}/>
       })
       }
      </div>

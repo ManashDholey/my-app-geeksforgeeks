@@ -1,6 +1,6 @@
 import AddToCartIcon from "../../assets/icons/add_cart.svg"
 import {useState,useEffect} from "react"
-const ListItem = ({data})=>{
+const ListItem = ({data,updateItemTitle})=>{
     const [message,steMessage] = useState("Not added to the cart yet");
     const [counter, setCounter] = useState(0)
     const [isAddToCart,setAddToCart] = useState(true);
@@ -47,6 +47,7 @@ const ListItem = ({data})=>{
                 </div>
             </div>
             <small className={"cart-message"}>{message}</small>
+            <button onClick={()=>{updateItemTitle(data.id)}}>Update the Title</button>
            {isAddToCart ? <button className={"cart-add"} onClick={handleclick} >
                 <span>Add to Card</span>
                 <img src={AddToCartIcon} alt="add to cart"/>
