@@ -1,6 +1,7 @@
 import ListItem from "./ListItem/ListItem";
-import { useEffect, useState } from "react"
-import {Form} from './Form'
+import { useEffect, useState } from "react";
+import {Form} from './Form';
+import axios from "axios";
 export const Products = () =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
@@ -42,11 +43,17 @@ export const Products = () =>{
         thumbnail: "placeholder.png"
     });
 useEffect(()=>{
-  const result =  fetch(`http://localhost:8000/api/v1/get-products-data`);
-  result.then(response => response.json())
-  .then(data => console.log(data))
-  .catch(err => console.error(err));
+//   const result =  fetch(`http://localhost:8000/api/v1/get-products-data`);
+//   result.then(response => response.json())
+//   .then(data => console.log(data))
+//   .catch(err => console.error(err));
+     fatchProductData();
 },[])
+
+async function fatchProductData(){
+    const result = await axios.get(`http://localhost:8000/api/v1/get-products-data`); 
+     console.log("result=>",result);
+}
     // const handleTitle = (event) => {
     //     // console.log(event)
     //     // console.log(event.target.value)
@@ -106,7 +113,6 @@ const handleInput = event =>{
       items.map((item,index) => {
         return <ListItem data={item} key={item.id}/>
       })
-      
       }
      </div>
      </div>
