@@ -1,5 +1,6 @@
 import ListItem from "./ListItem/ListItem";
 import { useState } from "react"
+import {Form} from './Form'
 export const Products = () =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
@@ -63,6 +64,7 @@ const handleInput = event =>{
             return;
         }
         setItem(item);
+        console.log('item is updated', item);
     }
 
     return (
@@ -84,56 +86,7 @@ const handleInput = event =>{
     //     </>
     <div className={"product-wrapper"}>
             <div className={"form"}>
-                <form onSubmit={submitForm}>
-                    <h2>Item Card Details</h2>
-                    <div className={"input-field"}>
-                        <label htmlFor="title">Title</label>
-                        <input 
-                        name="title"
-                            type="text" 
-                            placeholder="Enter Title" 
-                            value={item.title} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"input-field"}>
-                        <label htmlFor="price">Price</label>
-                        <input 
-                        name="price"
-                            type="number" 
-                            placeholder="Enter Price" 
-                            value={item.price} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"input-field"}>
-                        <label htmlFor="discountPrice">Discount Price</label>
-                        <input 
-                        name="discountedPrice"
-                            type="number" 
-                            placeholder="Enter Discounted Price" 
-                            value={item.discountedPrice} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"input-field"}>
-                        <label htmlFor="thumbnail">Thumbnail</label>
-                        <input 
-                        name="thumbnail"
-                            type="text" 
-                            placeholder="Enter Thumbnail name" 
-                            value={item.thumbnail} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"submit-wrap"}>
-                        <button>Update</button>
-                    </div>
-                </form>
+               <Form  item={item} onChangeInput={handleInput} onFormSubmission={submitForm}/>
             </div>
 
     {/* <div className={"product-list"}>
