@@ -22,7 +22,7 @@ const ListItem = ({data})=>{
         if(counter <= 0) {
             setAddToCart(true);
         }else{
-            if(isAddToCart == true)
+            if(isAddToCart)
               setAddToCart(false);
         }
     }, [counter,isAddToCart])
@@ -47,7 +47,7 @@ const ListItem = ({data})=>{
                 </div>
             </div>
             <small className={"cart-message"}>{message}</small>
-           {isAddToCart == true? <button className={"cart-add"} onClick={handleclick} >
+           {isAddToCart ? <button className={"cart-add"} onClick={handleclick} >
                 <span>Add to Card</span>
                 <img src={AddToCartIcon} alt="add to cart"/>
             </button> : <div className={"cart-addon"}>
