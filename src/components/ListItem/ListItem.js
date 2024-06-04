@@ -6,6 +6,20 @@ const ListItem = ({data})=>{
         steMessage("Added to the cart!");
         console.log("Clicked")
     } 
+    const [counter, setCounter] = useState(0)
+
+    const increaseCounterByOne = () => {
+        // Add increasing logic
+        setCounter(counter + 1);
+    }
+
+    const descreaseCounterByOne = () => {
+        // Add descreasing logic
+        if(counter <= 0) {
+            return;
+        }
+        setCounter(counter - 1);
+    }
 
     return (
         <div className={"item-card"}>
@@ -22,10 +36,15 @@ const ListItem = ({data})=>{
                 </div>
             </div>
             <small className={"cart-message"}>{message}</small>
-            <button className={"cart-add"} onClick={handleclick} >
+            {/* <button className={"cart-add"} onClick={handleclick} >
                 <span>Add to Card</span>
                 <img src={AddToCartIcon} alt="add to cart"/>
-            </button>
+            </button> */}
+             <div className={"cart-addon"}>
+                <button onClick={descreaseCounterByOne}><span>-</span></button>
+                <span className={"counter"}>{counter}</span>
+                <button onClick={increaseCounterByOne}><span>+</span></button>
+            </div>
         </div>
     )
 }

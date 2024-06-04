@@ -1,6 +1,6 @@
 import {Products} from "./components/ListItem/Products";
-import { Header } from "./components/Header";
-import { SubHeader } from "./components/SubHeader";
+import { Header } from "./components/layout/Header";
+import { SubHeader } from "./components/layout/SubHeader";
 
 const App = () => {
   return (
