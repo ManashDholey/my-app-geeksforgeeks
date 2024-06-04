@@ -6,7 +6,34 @@ export const Products = () =>{
     // const [price, setPrice] = useState(0)
     // const [discountedPrice, setDiscountedPrice] = useState(0)
     // const [thumbnail, setThumbnail] = useState("")
-
+ const [items,setItems] = useState([{
+    id: 0,
+    title: "Title of this Item 1",
+    price: 450,
+    discountedPrice: 340,
+    thumbnail: "placeholder.png"
+},
+{
+    id: 1,
+    title: "Title of this Item 2",
+    price: 550,
+    discountedPrice: 440,
+    thumbnail: "placeholder.png"
+},
+{
+    id: 2,
+    title: "Title of this Item 3",
+    price: 650,
+    discountedPrice: 540,
+    thumbnail: "placeholder.png"
+},
+{
+    id: 3,
+    title: "Title of this Item 4",
+    price: 750,
+    discountedPrice: 540,
+    thumbnail: "placeholder.png"
+}]);
     const [item, setItem] = useState({
         id: 0,
         title: "Title of this Item 1",
@@ -68,38 +95,15 @@ const handleInput = event =>{
     }
 
     return (
-    //     <>
-    //        <ListItem data = {{
-    //     discountedPrice:340,
-    //     price:450,
-    //     title: "Title of the item",
-    //     thumbnail:"placeholder.png"
-    // }}
-    //  />
-    //   <ListItem data = {{
-    //     discountedPrice:440,
-    //     price:550,
-    //     title: "Title of the item1",
-    //     thumbnail:"placeholder.png"
-    // }}
-    //  />
-    //     </>
-    <div className={"product-wrapper"}>
-            <div className={"form"}>
-               <Form  item={item} onChangeInput={handleInput} onFormSubmission={submitForm}/>
-            </div>
-
-    {/* <div className={"product-list"}>
+    <div className={"product-list"}>
     <div className={"product-list--wrapper"}>
-        <ListItem data={items[0]}></ListItem>
-        <ListItem data={items[1]}></ListItem>
-    </div>
-</div> */}
- <div>
-                <div>
-                    <ListItem data={item} />
-                </div>
-            </div>
-</div>
+      {
+      items.map((item,index) => {
+        return <ListItem data={item} key={item.id}/>
+      })
+      
+      }
+     </div>
+     </div>
     )
 }
