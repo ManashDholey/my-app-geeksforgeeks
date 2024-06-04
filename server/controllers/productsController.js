@@ -15,6 +15,7 @@ exports.getProductData = async (req, res, next) => {
           }
           return item;
     });
+    data.items = result;
     res.status(200).json({
       success: true,
       data:result,
