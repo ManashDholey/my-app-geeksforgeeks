@@ -1,24 +1,11 @@
-import ListItem from "./components/ListItem";
+import {Products} from "./components/ListItem/Products";
 
 
 const App = () => {
   return (
     <div className="App">
      {/* <h1> hello world!</h1> */}
-     <ListItem data = {{
-        discountedPrice:340,
-        price:450,
-        title: "Title of the item",
-        thumbnail:"placeholder.png"
-    }}
-     />
-      <ListItem data = {{
-        discountedPrice:440,
-        price:550,
-        title: "Title of the item1",
-        thumbnail:"placeholder.png"
-    }}
-     />
+     <Products></Products>
     </div>
   );
 }

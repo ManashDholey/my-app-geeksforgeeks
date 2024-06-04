@@ -1,4 +1,4 @@
-import AddToCartIcon from "../assets/icons/add_cart.svg"
+import AddToCartIcon from "../../assets/icons/add_cart.svg"
 
 const ListItem = ({data})=>{
     //const data = 
