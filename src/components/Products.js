@@ -2,6 +2,7 @@ import ListItem from "./ListItem/ListItem";
 import { useEffect, useState } from "react";
 import {Form} from './Form';
 import axios from "axios";
+import Loader from "./UI/Loader";
 export const Products = () =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
@@ -35,6 +36,7 @@ export const Products = () =>{
     //     discountedPrice: 540,
     //     thumbnail: "placeholder.png"
     // }
+    const [loader,setLoader] = useState(true);
  const [items,setItems] = useState([]);
     const [item, setItem] = useState({
         id: 0,
@@ -63,12 +65,17 @@ async function fatchProductData(){
         }
      });
      setItems(transFormedData);
+    
     }
     catch(err){
         console.log(err);
+        //setLoader(false);
+    }finally{
+        setLoader(false);
     }
 }
 const updateItemTitle = async (itemId) => {
+    setLoader(true);
     console.log(`Item with Id:${itemId}`);
     try{
         let title = `Update Title #Item-${itemId}`
@@ -80,9 +87,10 @@ const updateItemTitle = async (itemId) => {
         let index = data.findIndex(e => e.id === itemId)
         data[index]['title'] = title
         setItems(data)
-
     }catch(err){
         console.log(err);
+    }finally{
+        setLoader(false);
     }
 }
     // const handleTitle = (event) => {
@@ -138,6 +146,7 @@ const handleInput = event =>{
     }
 
     return (
+        <>
     <div className={"product-list"}>
     <div className={"product-list--wrapper"}>
       {
@@ -147,5 +156,7 @@ const handleInput = event =>{
       }
      </div>
      </div>
+    {loader && <Loader />} 
+     </>
     )
 }
