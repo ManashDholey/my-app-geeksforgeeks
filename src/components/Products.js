@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {Form} from './Form';
 import axios from "axios";
 import Loader from "./UI/Loader";
-export const Products = () =>{
+export const Products = ({onAddItem, onRemoveItem}) =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
     // const [discountedPrice, setDiscountedPrice] = useState(0)
@@ -38,6 +38,7 @@ export const Products = () =>{
     // }
     const [loader,setLoader] = useState(true);
  const [items,setItems] = useState([]);
+ const [presentItem,setPresentItems] = useState([]);
     const [item, setItem] = useState({
         id: 0,
         title: "Title of this Item 1",
@@ -144,14 +145,31 @@ const handleInput = event =>{
         setItem(item);
         console.log('item is updated', item);
     }
-
+  const handleAddItem = id =>{
+    console.log(id);
+    if(presentItem.indexOf(id) >-1){
+      return ;
+    }
+    setPresentItems([...presentItem,id]);
+    onAddItem();
+  }
+  const handleRemoveItem = id =>{
+    console.log(id);
+    let index = presentItem.indexOf(id);
+    if(index >-1){
+        let items = [...presentItem];
+        items.splice(index,1);
+        setPresentItems([...items]);
+        onRemoveItem();
+    }
+  }
     return (
         <>
     <div className={"product-list"}>
     <div className={"product-list--wrapper"}>
       {
       items.map((item,index) => {
-        return <ListItem data={item} key={item.id} updateItemTitle={updateItemTitle}/>
+        return <ListItem data={item} key={item.id} updateItemTitle={updateItemTitle} onAdd={handleAddItem} onRemove={handleRemoveItem}/>
       })
       }
      </div>

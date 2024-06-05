@@ -1,5 +1,5 @@
 
-export const Header = () => {
+export const Header = ({cartItems}) => {
     return (
         <>
            <header>
@@ -41,7 +41,7 @@ export const Header = () => {
         </div>
         <div className="cart-container">
             <button>
-                <span data-items="0">Cart</span>
+                <span data-items={cartItems}>Cart</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-shopping-cart-plus" width="20" height="20" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <circle cx="6" cy="19" r="2" />
