@@ -62,6 +62,7 @@ async function fatchProductData(){
      const transFormedData = data.map((item,index)=>{
         return {
             ...item,
+            quantity:0,
             id: index
         }
      });
@@ -127,41 +128,52 @@ const updateItemTitle = async (itemId) => {
     //         thumbnail: event.target.value
     //     })
     // }
-const handleInput = event =>{
-    setItem({...item,[event.target.name]:event.target.value})
-}
-    const submitForm = event => {
-        event.preventDefault();
-        // console.log({
-        //     title: title,
-        //     price,
-        //     discountedPrice,
-        //     thumbnail
-        // })
-        if(item.discountedPrice > item.price) {
-            alert("Discounted Price cannot be greater than price")
-            return;
-        }
-        setItem(item);
-        console.log('item is updated', item);
-    }
+// const handleInput = event =>{
+//     setItem({...item,[event.target.name]:event.target.value})
+// }
+    // const submitForm = event => {
+    //     event.preventDefault();
+    //     // console.log({
+    //     //     title: title,
+    //     //     price,
+    //     //     discountedPrice,
+    //     //     thumbnail
+    //     // })
+    //     if(item.discountedPrice > item.price) {
+    //         alert("Discounted Price cannot be greater than price")
+    //         return;
+    //     }
+    //     setItem(item);
+    //     console.log('item is updated', item);
+    // }
   const handleAddItem = id =>{
     console.log(id);
-    if(presentItem.indexOf(id) >-1){
-      return ;
-    }
-    setPresentItems([...presentItem,id]);
-    onAddItem();
+    // if(presentItem.indexOf(id) >-1){
+    //   return ;
+    // }
+    // setPresentItems([...presentItem,id]);
+    let data = [...items];
+    let index = data.findIndex(i => i.id === id);
+    data[index].quantity += 1; 
+    setItems([...data]);
+    onAddItem(data[index]);
   }
   const handleRemoveItem = id =>{
     console.log(id);
-    let index = presentItem.indexOf(id);
-    if(index >-1){
-        let items = [...presentItem];
-        items.splice(index,1);
-        setPresentItems([...items]);
-        onRemoveItem();
+    // let index = presentItem.indexOf(id);
+    // if(index >-1){
+    //     let items = [...presentItem];
+    //     items.splice(index,1);
+    //     setPresentItems([...items]);
+    //     onRemoveItem();
+    // }
+    let data = [...items];
+    let index = data.findIndex(i => i.id === id);
+    if(data[index].quantity > 0){
+        data[index].quantity -= 1; 
+        setItems([...data]);
     }
+    onRemoveItem(data[index]);
   }
     return (
         <>
