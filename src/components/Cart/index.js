@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
-const Cart = ({cartItems}) =>{
+const Cart = ({cartItems,onEventQueue}) =>{
    const [showModal, setShowModal] = useState(false);
 
    function cartClickhandeler(e) {
@@ -29,14 +29,16 @@ const Cart = ({cartItems}) =>{
                            <div className="checkout-modal_list">
                             {cartItems.length > 0 ?
                              cartItems.map((item)=>{
-                                return (<CartItem data={item}/>)
+                                return (<CartItem data={item} 
+                                    onEmitIncreaseItem={id => onEventQueue(id,1)} 
+                                    onEmitDecreaseItem={id => onEventQueue(id,-1)}
+                                    key={item.id}/>)
                              })
                                      :
                             <div className="empty-cart">Please add something in your cart!</div>
                             }
                                
                            </div> 
-                           
                            {
                             cartItems.length > 0 && 
                             <div className="checkout-modal_footer">

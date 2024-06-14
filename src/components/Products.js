@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {Form} from './Form';
 import axios from "axios";
 import Loader from "./UI/Loader";
-export const Products = ({onAddItem, onRemoveItem}) =>{
+export const Products = ({onAddItem, onRemoveItem,eventState }) =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
     // const [discountedPrice, setDiscountedPrice] = useState(0)
@@ -37,15 +37,15 @@ export const Products = ({onAddItem, onRemoveItem}) =>{
     //     thumbnail: "placeholder.png"
     // }
     const [loader,setLoader] = useState(true);
- const [items,setItems] = useState([]);
- const [presentItem,setPresentItems] = useState([]);
-    const [item, setItem] = useState({
-        id: 0,
-        title: "Title of this Item 1",
-        price: 450,
-        discountedPrice: 340,
-        thumbnail: "placeholder.png"
-    });
+    const [items,setItems] = useState([]);
+ //const [presentItem,setPresentItems] = useState([]);
+    // const [item, setItem] = useState({
+    //     id: 0,
+    //     title: "Title of this Item 1",
+    //     price: 450,
+    //     discountedPrice: 340,
+    //     thumbnail: "placeholder.png"
+    // });
 useEffect(()=>{
 //   const result =  fetch(`http://localhost:8000/api/v1/get-products-data`);
 //   result.then(response => response.json())
@@ -67,7 +67,6 @@ async function fatchProductData(){
         }
      });
      setItems(transFormedData);
-    
     }
     catch(err){
         console.log(err);
@@ -175,6 +174,16 @@ const updateItemTitle = async (itemId) => {
     }
     onRemoveItem(data[index]);
   }
+  useEffect(() => {
+    if(eventState.id > -1) {
+        if(eventState.type === 1) {
+            handleAddItem(eventState.id)
+        }
+        else if(eventState.type === -1) {
+            handleRemoveItem(eventState.id)
+        }
+    }
+}, [eventState])
     return (
         <>
     <div className={"product-list"}>

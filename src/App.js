@@ -4,6 +4,7 @@ import { SubHeader } from "./components/Layout/SubHeader";
 import {useState} from "react";
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [eventQueue,setEventQueue] = useState({id:"",type:""})
   const onAddItem = (item) => {
     let items = [...cartItems];
     let index = items.findIndex(i => i.id === item.id);
@@ -26,11 +27,19 @@ const App = () => {
     setCartItems([...items]);
     //setCartItems(cartItems - 1);
   }
+  // type === -1, decrease
+  // type === 1, increase
+  const handleEventQueue = (id, type) => {
+    setEventQueue({
+      id,
+      type
+    })
+  }
   return (
     <div className="App">
-     <Header cartItems={cartItems}/>
+     <Header cartItems={cartItems} onEventQueue={handleEventQueue}/>
      <SubHeader/>
-     <Products onAddItem= {onAddItem} onRemoveItem={onRemoveItem}></Products>
+     <Products onAddItem= {onAddItem} onRemoveItem={onRemoveItem} eventState={eventQueue} ></Products>
     </div>
   );
 }

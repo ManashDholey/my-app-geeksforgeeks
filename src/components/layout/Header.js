@@ -1,6 +1,6 @@
 import Cart from "../Cart/index"
 
-export const Header = ({cartItems}) => {
+export const Header = ({cartItems,onEventQueue}) => {
     return (
         <>
            <header>
@@ -41,7 +41,7 @@ export const Header = ({cartItems}) => {
             </svg>
         </div>
         <div className="cart-container">
-            <Cart cartItems={cartItems}/>
+            <Cart cartItems={cartItems} onEventQueue={onEventQueue}/>
         </div>
     </header>
         </>
