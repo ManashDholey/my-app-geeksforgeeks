@@ -1,13 +1,17 @@
 import { useState } from "react";
 import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
+import OrderSuccessModal from '../UI/OrderSuccessModal';
 const Cart = ({cartItems,onEventQueue}) =>{
    const [showModal, setShowModal] = useState(false);
-
+   const [orderModal, setOrderModal] = useState(false)
    function cartClickhandeler(e) {
     setShowModal(previousState => !previousState);
    }
-
+    const  handaleOrderModel = () => {
+        setShowModal(false);
+        setOrderModal(previous => !previous);
+    } 
     return (
         <>
            <button onClick={(e) => { cartClickhandeler(e)}}>
@@ -49,13 +53,14 @@ const Cart = ({cartItems,onEventQueue}) =>{
                                 },0) } 
                                     <span style={{marginLeft:"4px"}}>INR</span></h4>
                                </div>
-                               <button>Order Now</button>
+                               <button onClick={handaleOrderModel}>Order Now</button>
                             </div> 
                            }
                             
                      </div>
                 </Modal>
             }
+            { orderModal && <OrderSuccessModal onClose={handaleOrderModel}/> }
         </>    
     )
 }
