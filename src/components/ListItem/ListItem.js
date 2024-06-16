@@ -59,9 +59,9 @@ const ListItem = ({data,updateItemTitle})=>{
             <img className={"img-fluid"} src={`../../../assets/${item?.thumbnail}`} alt="some title" />
             <div className={"item-card__information"}>
                 <div className={"pricing"}>
-                    <span>₹{item?.price}</span>
+                <span>₹ {item?.discountedPrice}</span>
                     <small>
-                       <strike>₹ {item?.discountedPrice}</strike>
+                       <strike>₹{item?.price}</strike>
                      </small>
                 </div>
                 <div className="title">

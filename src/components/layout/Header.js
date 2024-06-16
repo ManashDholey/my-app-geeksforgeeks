@@ -1,5 +1,5 @@
 import Cart from "../Cart/index"
-
+import SearchBox from "../UI/SearchBox"
 export const Header = ({cartItems,onEventQueue}) => {
     return (
         <>
@@ -19,7 +19,8 @@ export const Header = ({cartItems,onEventQueue}) => {
             </a>
         </div>
         <div className="searchBox-container">
-            <form>
+        <SearchBox/>
+            {/* <form>
                 <input name="search" type="text"
                     id="search" placeholder="Enter product name, category" />
                 <button type="submit">
@@ -38,7 +39,7 @@ export const Header = ({cartItems,onEventQueue}) => {
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <circle cx="10" cy="10" r="7" />
                 <line x1="21" y1="21" x2="15" y2="15" />
-            </svg>
+            </svg> */}
         </div>
         <div className="cart-container">
             <Cart />

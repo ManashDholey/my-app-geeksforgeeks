@@ -1,7 +1,9 @@
 import {Products} from "./components/Products";
 import { Header } from "./components/Layout/Header";
 import { SubHeader } from "./components/Layout/SubHeader";
-import {useState} from "react";
+import {BrowserRouter , Routes, Route } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
+import NotFound from "./components/NotFound";
 const App = () => {
   // const [cartItems, setCartItems] = useState([]);
   // const [eventQueue,setEventQueue] = useState({id:"",type:""})
@@ -36,11 +38,28 @@ const App = () => {
   //   })
   // }
   return (
-    <div className="App">
-     <Header />
-     <SubHeader/>
-     <Products  ></Products>
-    </div>
+    // <div className="App">
+    //  <Header />
+    //  <SubHeader/>
+    //  <Products  ></Products>
+    // </div>
+    <>
+    <BrowserRouter>
+    <nav>
+      <Header/>
+      <SubHeader/>
+      <Outlet/>
+      </nav>
+       <Routes>
+         {/* <Route path="/" element={<Products />} exact/> */}
+         <Route path="*" element={<NotFound />} />
+         <Route path="/notfound" element={<NotFound />} />
+         <Route path="/:category?" element={<Products />} exact/>
+         
+       </Routes>
+    </BrowserRouter>
+    
+  </>
   );
 }
 

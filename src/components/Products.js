@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {Form} from './Form';
 import axios from "axios";
 import Loader from "./UI/Loader";
+import { useNavigate, useLocation, useParams } from "react-router-dom"
 export const Products = () =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
@@ -38,6 +39,10 @@ export const Products = () =>{
     // }
     const [loader,setLoader] = useState(true);
     const [items,setItems] = useState([]);
+    const params = useParams();
+    const navigate = useNavigate();
+    const { search } = useLocation();
+    const queryParams = new URLSearchParams(search).get("search");
  //const [presentItem,setPresentItems] = useState([]);
     // const [item, setItem] = useState({
     //     id: 0,
@@ -52,12 +57,24 @@ useEffect(()=>{
 //   .then(data => console.log(data))
 //   .catch(err => console.error(err));
      fatchProductData();
-},[])
+
+     return() =>{
+        setItems([]);
+        setLoader(true);
+     }
+},[params.category,queryParams])
 
 async function fatchProductData(){
     try{
-    const result = await axios.get(`http://localhost:8000/api/v1/get-products-data`); 
-     console.log("result=>",result);
+        ///get-products-data-by-category
+        let query="";
+       if(!params.category){ 
+        if(queryParams) {
+            query = `?search=${queryParams}`
+        }
+        console.log("query=>",query);
+    const result = await axios.get(`http://localhost:8000/api/v1/get-products-data${query}`); 
+    // console.log("result=>",result);
      const data = result.data.data;
      const transFormedData = data.map((item,index)=>{
         return {
@@ -67,6 +84,23 @@ async function fatchProductData(){
         }
      });
      setItems(transFormedData);
+    }else{
+        const result = await axios.get(`http://localhost:8000/api/v1/get-products-data-by-category/${params.category}`); 
+     console.log("result=>",result);
+     const data = result.data.data;
+     if(data){
+     const transFormedData = data.map((item,index)=>{
+        return {
+            ...item,
+             quantity:0,
+            id: index
+        }
+     });
+     setItems(transFormedData);
+    }else{
+        navigate("/notfound");
+        }
+    }
     }
     catch(err){
         console.log(err);
@@ -184,6 +218,9 @@ const updateItemTitle = async (itemId) => {
 //         }
 //     }
 // }, [eventState])
+const handleNotFound = () => {
+    navigate('/404');
+}
     return (
         <>
     <div className={"product-list"}>
