@@ -1,3 +1,5 @@
+import { combineReducers } from "redux"
+import authReducer from "./auth"
 const initialState = {
     items: [],
     totalAmount: 0
@@ -61,4 +63,7 @@ const mainReducer = (state = initialState, action) => {
     }
 }
 
-export default mainReducer
+export default combineReducers({
+    cart: mainReducer,
+    auth: authReducer
+})

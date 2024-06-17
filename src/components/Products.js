@@ -79,8 +79,7 @@ async function fatchProductData(){
      const transFormedData = data.map((item,index)=>{
         return {
             ...item,
-             quantity:0,
-            id: index
+             quantity:0
         }
      });
      setItems(transFormedData);
@@ -92,8 +91,7 @@ async function fatchProductData(){
      const transFormedData = data.map((item,index)=>{
         return {
             ...item,
-             quantity:0,
-            id: index
+             quantity:0
         }
      });
      setItems(transFormedData);
@@ -218,9 +216,7 @@ const updateItemTitle = async (itemId) => {
 //         }
 //     }
 // }, [eventState])
-const handleNotFound = () => {
-    navigate('/404');
-}
+
     return (
         <>
     <div className={"product-list"}>

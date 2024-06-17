@@ -8,7 +8,7 @@ const ListItem = ({data,updateItemTitle})=>{
     // const [counter, setCounter] = useState(0)
    // const [isAddToCart,setAddToCart] = useState(true);
     const [showModal, setShowModal] = useState(false);
-    let item = useSelector(state => state.items.find(item => item.id === data.id));
+    let item = useSelector(state => state.cart.items.find(item => item.id === data.id));
     
     if(!item)
         item ={...data};
