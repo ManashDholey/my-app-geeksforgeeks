@@ -7,8 +7,8 @@ console.log('mainReducer:', mainReducer);
 console.log('composeWithDevTools:', composeWithDevTools);
 console.log('thunk middleware:', thunk);
 const initialState = {
-    items: [],
-    totalAmount: 0
+    // items: [],
+    // totalAmount: 0
 };
 let store;
 try{
