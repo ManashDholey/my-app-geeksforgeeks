@@ -1,19 +1,99 @@
 import ListItem from "./ListItem/ListItem";
-import { useState } from "react"
-export const Products = () =>{
+import { useEffect, useState } from "react";
+import {Form} from './Form';
+import axios from "axios";
+import Loader from "./UI/Loader";
+export const Products = ({onAddItem, onRemoveItem,eventState }) =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
     // const [discountedPrice, setDiscountedPrice] = useState(0)
     // const [thumbnail, setThumbnail] = useState("")
+    // {
+    //     id: 0,
+    //     title: "Title of this Item 1",
+    //     price: 450,
+    //     discountedPrice: 340,
+    //     thumbnail: "placeholder.png"
+    // },
+    // {
+    //     id: 1,
+    //     title: "Title of this Item 2",
+    //     price: 550,
+    //     discountedPrice: 440,
+    //     thumbnail: "placeholder.png"
+    // },
+    // {
+    //     id: 2,
+    //     title: "Title of this Item 3",
+    //     price: 650,
+    //     discountedPrice: 540,
+    //     thumbnail: "placeholder.png"
+    // },
+    // {
+    //     id: 3,
+    //     title: "Title of this Item 4",
+    //     price: 750,
+    //     discountedPrice: 540,
+    //     thumbnail: "placeholder.png"
+    // }
+    const [loader,setLoader] = useState(true);
+    const [items,setItems] = useState([]);
+ //const [presentItem,setPresentItems] = useState([]);
+    // const [item, setItem] = useState({
+    //     id: 0,
+    //     title: "Title of this Item 1",
+    //     price: 450,
+    //     discountedPrice: 340,
+    //     thumbnail: "placeholder.png"
+    // });
+useEffect(()=>{
+//   const result =  fetch(`http://localhost:8000/api/v1/get-products-data`);
+//   result.then(response => response.json())
+//   .then(data => console.log(data))
+//   .catch(err => console.error(err));
+     fatchProductData();
+},[])
 
-    const [item, setItem] = useState({
-        id: 0,
-        title: "Title of this Item 1",
-        price: 450,
-        discountedPrice: 340,
-        thumbnail: "placeholder.png"
-    });
-
+async function fatchProductData(){
+    try{
+    const result = await axios.get(`http://localhost:8000/api/v1/get-products-data`); 
+     console.log("result=>",result);
+     const data = result.data.data;
+     const transFormedData = data.map((item,index)=>{
+        return {
+            ...item,
+            quantity:0,
+            id: index
+        }
+     });
+     setItems(transFormedData);
+    }
+    catch(err){
+        console.log(err);
+        //setLoader(false);
+    }finally{
+        setLoader(false);
+    }
+}
+const updateItemTitle = async (itemId) => {
+    setLoader(true);
+    console.log(`Item with Id:${itemId}`);
+    try{
+        let title = `Update Title #Item-${itemId}`
+      const result =  await axios.put(`http://localhost:8000/api/v1/update-products-data/${itemId}`, {
+            title: title
+        })
+        console.log("result=>",result);
+        let data = [...items]
+        let index = data.findIndex(e => e.id === itemId)
+        data[index]['title'] = title
+        setItems(data)
+    }catch(err){
+        console.log(err);
+    }finally{
+        setLoader(false);
+    }
+}
     // const handleTitle = (event) => {
     //     // console.log(event)
     //     // console.log(event.target.value)
@@ -47,106 +127,75 @@ export const Products = () =>{
     //         thumbnail: event.target.value
     //     })
     // }
-const handleInput = event =>{
-    setItem({...item,[event.target.name]:event.target.value})
-}
-    const submitForm = event => {
-        event.preventDefault();
-        // console.log({
-        //     title: title,
-        //     price,
-        //     discountedPrice,
-        //     thumbnail
-        // })
-        if(item.discountedPrice > item.price) {
-            alert("Discounted Price cannot be greater than price")
-            return;
-        }
-        setItem(item);
+// const handleInput = event =>{
+//     setItem({...item,[event.target.name]:event.target.value})
+// }
+    // const submitForm = event => {
+    //     event.preventDefault();
+    //     // console.log({
+    //     //     title: title,
+    //     //     price,
+    //     //     discountedPrice,
+    //     //     thumbnail
+    //     // })
+    //     if(item.discountedPrice > item.price) {
+    //         alert("Discounted Price cannot be greater than price")
+    //         return;
+    //     }
+    //     setItem(item);
+    //     console.log('item is updated', item);
+    // }
+  const handleAddItem = id =>{
+    console.log(id);
+    // if(presentItem.indexOf(id) >-1){
+    //   return ;
+    // }
+    // setPresentItems([...presentItem,id]);
+    let data = [...items];
+    let index = data.findIndex(i => i.id === id);
+    data[index].quantity += 1; 
+    setItems([...data]);
+    onAddItem(data[index]);
+  }
+  const handleRemoveItem = id =>{
+    console.log(id);
+    // let index = presentItem.indexOf(id);
+    // if(index >-1){
+    //     let items = [...presentItem];
+    //     items.splice(index,1);
+    //     setPresentItems([...items]);
+    //     onRemoveItem();
+    // }
+    let data = [...items];
+    let index = data.findIndex(i => i.id === id);
+    if(data[index].quantity > 0){
+        data[index].quantity -= 1; 
+        setItems([...data]);
     }
-
+    onRemoveItem(data[index]);
+  }
+  useEffect(() => {
+    if(eventState.id > -1) {
+        if(eventState.type === 1) {
+            handleAddItem(eventState.id)
+        }
+        else if(eventState.type === -1) {
+            handleRemoveItem(eventState.id)
+        }
+    }
+}, [eventState])
     return (
-    //     <>
-    //        <ListItem data = {{
-    //     discountedPrice:340,
-    //     price:450,
-    //     title: "Title of the item",
-    //     thumbnail:"placeholder.png"
-    // }}
-    //  />
-    //   <ListItem data = {{
-    //     discountedPrice:440,
-    //     price:550,
-    //     title: "Title of the item1",
-    //     thumbnail:"placeholder.png"
-    // }}
-    //  />
-    //     </>
-    <div className={"product-wrapper"}>
-            <div className={"form"}>
-                <form onSubmit={submitForm}>
-                    <h2>Item Card Details</h2>
-                    <div className={"input-field"}>
-                        <label htmlFor="title">Title</label>
-                        <input 
-                        name="title"
-                            type="text" 
-                            placeholder="Enter Title" 
-                            value={item.title} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"input-field"}>
-                        <label htmlFor="price">Price</label>
-                        <input 
-                        name="price"
-                            type="number" 
-                            placeholder="Enter Price" 
-                            value={item.price} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"input-field"}>
-                        <label htmlFor="discountPrice">Discount Price</label>
-                        <input 
-                        name="discountedPrice"
-                            type="number" 
-                            placeholder="Enter Discounted Price" 
-                            value={item.discountedPrice} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"input-field"}>
-                        <label htmlFor="thumbnail">Thumbnail</label>
-                        <input 
-                        name="thumbnail"
-                            type="text" 
-                            placeholder="Enter Thumbnail name" 
-                            value={item.thumbnail} 
-                            onChange={handleInput}
-                            required
-                        />
-                    </div>
-                    <div className={"submit-wrap"}>
-                        <button>Update</button>
-                    </div>
-                </form>
-            </div>
-
-    {/* <div className={"product-list"}>
+        <>
+    <div className={"product-list"}>
     <div className={"product-list--wrapper"}>
-        <ListItem data={items[0]}></ListItem>
-        <ListItem data={items[1]}></ListItem>
-    </div>
-</div> */}
- <div>
-                <div>
-                    <ListItem data={item} />
-                </div>
-            </div>
-</div>
+      {
+      items.map((item,index) => {
+        return <ListItem data={item} key={item.id} updateItemTitle={updateItemTitle} onAdd={handleAddItem} onRemove={handleRemoveItem}/>
+      })
+      }
+     </div>
+     </div>
+    {loader && <Loader />} 
+     </>
     )
 }
