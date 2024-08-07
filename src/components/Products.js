@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {Form} from './Form';
 import axios from "axios";
 import Loader from "./UI/Loader";
-export const Products = ({onAddItem, onRemoveItem,eventState }) =>{
+export const Products = () =>{
     // const [title, setTitle] = useState("")
     // const [price, setPrice] = useState(0)
     // const [discountedPrice, setDiscountedPrice] = useState(0)
@@ -62,7 +62,7 @@ async function fatchProductData(){
      const transFormedData = data.map((item,index)=>{
         return {
             ...item,
-            quantity:0,
+             quantity:0,
             id: index
         }
      });
@@ -145,52 +145,52 @@ const updateItemTitle = async (itemId) => {
     //     setItem(item);
     //     console.log('item is updated', item);
     // }
-  const handleAddItem = id =>{
-    console.log(id);
-    // if(presentItem.indexOf(id) >-1){
-    //   return ;
-    // }
-    // setPresentItems([...presentItem,id]);
-    let data = [...items];
-    let index = data.findIndex(i => i.id === id);
-    data[index].quantity += 1; 
-    setItems([...data]);
-    onAddItem(data[index]);
-  }
-  const handleRemoveItem = id =>{
-    console.log(id);
-    // let index = presentItem.indexOf(id);
-    // if(index >-1){
-    //     let items = [...presentItem];
-    //     items.splice(index,1);
-    //     setPresentItems([...items]);
-    //     onRemoveItem();
-    // }
-    let data = [...items];
-    let index = data.findIndex(i => i.id === id);
-    if(data[index].quantity > 0){
-        data[index].quantity -= 1; 
-        setItems([...data]);
-    }
-    onRemoveItem(data[index]);
-  }
-  useEffect(() => {
-    if(eventState.id > -1) {
-        if(eventState.type === 1) {
-            handleAddItem(eventState.id)
-        }
-        else if(eventState.type === -1) {
-            handleRemoveItem(eventState.id)
-        }
-    }
-}, [eventState])
+//   const handleAddItem = id =>{
+//     console.log(id);
+//     // if(presentItem.indexOf(id) >-1){
+//     //   return ;
+//     // }
+//     // setPresentItems([...presentItem,id]);
+//     let data = [...items];
+//     let index = data.findIndex(i => i.id === id);
+//     data[index].quantity += 1; 
+//     setItems([...data]);
+//     onAddItem(data[index]);
+//   }
+//   const handleRemoveItem = id =>{
+//     console.log(id);
+//     // let index = presentItem.indexOf(id);
+//     // if(index >-1){
+//     //     let items = [...presentItem];
+//     //     items.splice(index,1);
+//     //     setPresentItems([...items]);
+//     //     onRemoveItem();
+//     // }
+//     let data = [...items];
+//     let index = data.findIndex(i => i.id === id);
+//     if(data[index].quantity > 0){
+//         data[index].quantity -= 1; 
+//         setItems([...data]);
+//     }
+//     onRemoveItem(data[index]);
+//   }
+//   useEffect(() => {
+//     if(eventState.id > -1) {
+//         if(eventState.type === 1) {
+//             handleAddItem(eventState.id)
+//         }
+//         else if(eventState.type === -1) {
+//             handleRemoveItem(eventState.id)
+//         }
+//     }
+// }, [eventState])
     return (
         <>
     <div className={"product-list"}>
     <div className={"product-list--wrapper"}>
       {
       items.map((item,index) => {
-        return <ListItem data={item} key={item.id} updateItemTitle={updateItemTitle} onAdd={handleAddItem} onRemove={handleRemoveItem}/>
+        return <ListItem data={item} key={item.id} updateItemTitle={updateItemTitle} />
       })
       }
      </div>

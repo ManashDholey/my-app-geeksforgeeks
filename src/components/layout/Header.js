@@ -41,7 +41,7 @@ export const Header = ({cartItems,onEventQueue}) => {
             </svg>
         </div>
         <div className="cart-container">
-            <Cart cartItems={cartItems} onEventQueue={onEventQueue}/>
+            <Cart />
         </div>
     </header>
         </>
